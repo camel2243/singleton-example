@@ -1,0 +1,2 @@
+language="nodejs"
+run="npx jest --verbose tests/singletons/CacheManager.test.js"
