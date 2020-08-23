@@ -1,6 +1,6 @@
 'use strict';
-const CacheManager = require('../singletons/CacheManager.js');
-const User = require('../User.js');
+const rewire = require('rewire');
+const User = rewire('../User.js');
 
 describe('User', () => {
   beforeEach(() => {
@@ -8,20 +8,31 @@ describe('User', () => {
     this.user = new User(this.name);
   });
   it('should login with name', () => {
+    const mockFn = jest.fn();
+    const revert = User.__set__('CacheManager.instance.set', mockFn);
+
     this.user.login();
 
-    expect(CacheManager.instance.get(this.name)).toStrictEqual({ logged: true })
+    expect(mockFn.mock.calls[0][0]).toBe(this.name);
+    expect(mockFn.mock.calls[0][1]).toEqual({ logged: true });
+    revert();
   });
 
   it('should return logged:true ', () => {
-    CacheManager.instance.set(this.name, { logged: true });
+    const revert = User.__set__('CacheManager.instance.get', () => ({
+      logged: true
+    }));
 
-    expect(this.user.isLogged()).toBeTruthy()
+    expect(this.user.isLogged()).toBeTruthy();
+    revert();
   });
 
   it('should return logged:false ', () => {
-    CacheManager.instance.clear();
+    const revert = User.__set__('CacheManager.instance.get', () => ({
+      logged: false
+    }));
 
     expect(this.user.isLogged()).toBeFalsy();
+    revert();
   });
 });

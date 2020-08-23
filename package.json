@@ -5,10 +5,10 @@
   "author": "Camel",
   "license": "MIT",
   "dependencies": {
-    "jest": "^26.4.2"
+    "jest": "^26.4.2",
+    "rewire": "^5.0.0"
   },
   "scripts": {
     "start": "jest --verbose"
-  },
-  "type": "module"
+  }
 }
