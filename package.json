@@ -1,0 +1,14 @@
+{
+  "name": "singleton-example",
+  "version": "1.0.0",
+  "description": "singleton example demo",
+  "author": "Camel",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^26.4.2"
+  },
+  "scripts": {
+    "start": "jest --verbose"
+  },
+  "type": "module"
+}
